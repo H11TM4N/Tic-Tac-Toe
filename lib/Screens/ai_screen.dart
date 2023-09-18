@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/buttons.dart';
 
 class AIScreen extends StatelessWidget {
   const AIScreen({super.key});
@@ -6,8 +7,17 @@ class AIScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: const [],
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              refreshButton(),
+              homeButton(context),
+            ],
+          )
+        ],
       ),
     );
   }

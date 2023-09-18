@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe/Screens/ai_screen.dart';
-import 'package:tic_tac_toe/Screens/friend_screen.dart';
+import 'package:tic_tac_toe/screens/ai_screen.dart';
+import 'package:tic_tac_toe/screens/friend_screen.dart';
 
 class MyElevatedButton extends StatelessWidget {
   final String text;
