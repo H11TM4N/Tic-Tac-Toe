@@ -27,7 +27,7 @@ Icon xButton = const Icon(
   color: Colors.greenAccent,
 );
 
-Icon yButton = const Icon(
+Icon oButton = const Icon(
   FontAwesomeIcons.o,
   size: 50,
   color: Colors.blue,

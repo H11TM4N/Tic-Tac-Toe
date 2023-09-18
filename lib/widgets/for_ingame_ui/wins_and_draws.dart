@@ -28,7 +28,7 @@ class WinsnDraws extends StatelessWidget {
           ),
           Column(
             children: [
-              yButton,
+              oButton,
               Text('$ynum wins'),
             ],
           ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tic_tac_toe/providers/game_ui_provider.dart';
 import 'package:tic_tac_toe/widgets/for_ingame_ui/wins_and_draws.dart';
 import '../utils/buttons.dart';
 
@@ -7,6 +9,7 @@ class MainUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GameUIProvider gameUIProvider = Provider.of<GameUIProvider>(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -23,8 +26,27 @@ class MainUI extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * .50,
-                child: const Center(
-                  child: Text('Game UI will be here'),
+                child: Center(
+                  child: Expanded(
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                      ),
+                      itemCount: 9,
+                      itemBuilder: (BuildContext contex, index) {
+                        return GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black45),
+                            ),
+                            child: Center(child: gameUIProvider.xButton),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
             ),
