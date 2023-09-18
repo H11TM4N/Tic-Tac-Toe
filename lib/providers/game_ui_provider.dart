@@ -26,31 +26,19 @@ class GameUIProvider extends ChangeNotifier {
         ),
       );
 
-  Text text(text) {
-    return Text(
-      text,
-      style: const TextStyle(fontSize: 100, fontStyle: FontStyle.italic),
-    );
-  }
-
-  String xText = 'X';
-  String oText = 'O';
   bool xTurn = true;
   int xWins = 0;
   int yWins = 0;
   int draws = 0;
   int filledBoxes = 0;
-
   List<String> displayElements = ['', '', '', '', '', '', '', '', ''];
 
   void onTapped(int index) {
     if (xTurn && displayElements[index] == '') {
-      displayElements[index] = xText;
-      text(xText);
+      displayElements[index] = 'X';
       filledBoxes++;
     } else if (!xTurn && displayElements[index] == '') {
-      displayElements[index] = oText;
-      text(oText);
+      displayElements[index] = 'O';
       filledBoxes++;
     }
     xTurn = !xTurn;
