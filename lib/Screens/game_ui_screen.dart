@@ -11,13 +11,22 @@ class MainUI extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 WinsnDraws(xnum: 0, ynum: 1, dnum: 2) //numss
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * .50,
+                child: const Center(
+                  child: Text('Game UI will be here'),
+                ),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
