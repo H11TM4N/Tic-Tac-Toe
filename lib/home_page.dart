@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe/widgets/elevated_button.dart';
+import 'widgets/for_home_screen/elevated_button.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -40,6 +40,7 @@ class HomePage extends StatelessWidget {
                   textStyle: const TextStyle(
                     fontSize: 80.0,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'Canterbury',
                   ),
                   boxHeight: 100.0,
                 ),
