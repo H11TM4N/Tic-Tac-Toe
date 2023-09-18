@@ -16,10 +16,14 @@ class MainUI extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                WinsnDraws(xnum: 0, ynum: 1, dnum: 2) //numss
+                WinsnDraws(
+                  xnum: gameUIProvider.xWins,
+                  ynum: gameUIProvider.yWins,
+                  dnum: gameUIProvider.draws,
+                )
               ],
             ),
             Padding(
@@ -36,12 +40,17 @@ class MainUI extends StatelessWidget {
                       itemCount: 9,
                       itemBuilder: (BuildContext contex, index) {
                         return GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            gameUIProvider.onTapped(index);
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.black45),
                             ),
-                            child: Center(child: gameUIProvider.xButton),
+                            child: Center(
+                              child:
+                                  Text(gameUIProvider.displayElements[index]),
+                            ),
                           ),
                         );
                       },
@@ -53,7 +62,7 @@ class MainUI extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                refreshButton(),
+                gameUIProvider.refreshButton(),
                 const SizedBox(width: 50),
                 homeButton(context),
               ],

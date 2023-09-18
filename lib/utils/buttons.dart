@@ -12,14 +12,6 @@ IconButton homeButton(BuildContext context) => IconButton(
       ),
     );
 
-IconButton refreshButton() => IconButton(
-      onPressed: () {},
-      icon: const Icon(
-        Icons.refresh,
-        size: 50,
-        color: Colors.blueGrey,
-      ),
-    );
 
 Icon xButton = const Icon(
   FontAwesomeIcons.x,
@@ -36,5 +28,5 @@ Icon oButton = const Icon(
 Icon dButton = const Icon(
   FontAwesomeIcons.scaleBalanced,
   size: 50,
-  color: Colors.greenAccent,
+  color: Colors.blueGrey,
 );

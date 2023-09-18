@@ -13,4 +13,55 @@ class GameUIProvider extends ChangeNotifier {
     size: 40,
     color: Colors.blue,
   );
+
+  IconButton refreshButton() => IconButton(
+      onPressed: () {
+        clearScoreBoard();
+        notifyListeners();
+      },
+      icon: const Icon(
+        Icons.refresh,
+        size: 50,
+        color: Colors.blueGrey,
+      ),
+    );
+
+  bool xTurn = true;
+  int xWins = 0;
+  int yWins = 0;
+  int draws = 0;
+  int filledBoxes = 0;
+
+  List<String> displayElements = ['', '', '', '', '', '', '', '', ''];
+
+  void onTapped(int index) {
+    if (xTurn && displayElements[index] == '') {
+      displayElements[index] = 'X';
+      filledBoxes++;
+    } else if (!xTurn && displayElements[index] == '') {
+      displayElements[index] = 'O';
+      filledBoxes++;
+    }
+    xTurn = !xTurn;
+    notifyListeners();
+  }
+
+  void clearBoard() {
+    for (int i = 0; i < 9; i++) {
+      displayElements[i] = '';
+    }
+    filledBoxes = 0;
+    notifyListeners();
+  }
+
+  void clearScoreBoard() {
+    xWins = 0;
+    yWins = 0;
+    draws = 0;
+    for (int i = 0; i < 9; i++) {
+      displayElements[i] = '';
+    }
+    filledBoxes = 0;
+    notifyListeners();
+  }
 }
