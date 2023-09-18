@@ -48,8 +48,10 @@ class MainUI extends StatelessWidget {
                               border: Border.all(color: Colors.black45),
                             ),
                             child: Center(
-                              child:
-                                  Text(gameUIProvider.displayElements[index]),
+                              child: Center(
+                                child: gameUIProvider.getBoardElement(
+                                    index), // Use getBoardElement to display icons
+                              ),
                             ),
                           ),
                         );

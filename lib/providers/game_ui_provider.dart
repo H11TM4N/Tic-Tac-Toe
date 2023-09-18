@@ -15,17 +15,26 @@ class GameUIProvider extends ChangeNotifier {
   );
 
   IconButton refreshButton() => IconButton(
-      onPressed: () {
-        clearScoreBoard();
-        notifyListeners();
-      },
-      icon: const Icon(
-        Icons.refresh,
-        size: 50,
-        color: Colors.blueGrey,
-      ),
-    );
+        onPressed: () {
+          clearScoreBoard();
+          notifyListeners();
+        },
+        icon: const Icon(
+          Icons.refresh,
+          size: 50,
+          color: Colors.blueGrey,
+        ),
+      );
 
+  Text text(text) {
+    return Text(
+      text,
+      style: const TextStyle(fontSize: 100, fontStyle: FontStyle.italic),
+    );
+  }
+
+  String xText = 'X';
+  String oText = 'O';
   bool xTurn = true;
   int xWins = 0;
   int yWins = 0;
@@ -36,14 +45,26 @@ class GameUIProvider extends ChangeNotifier {
 
   void onTapped(int index) {
     if (xTurn && displayElements[index] == '') {
-      displayElements[index] = 'X';
+      displayElements[index] = xText;
+      text(xText);
       filledBoxes++;
     } else if (!xTurn && displayElements[index] == '') {
-      displayElements[index] = 'O';
+      displayElements[index] = oText;
+      text(oText);
       filledBoxes++;
     }
     xTurn = !xTurn;
     notifyListeners();
+  }
+
+  Widget getBoardElement(int index) {
+    if (displayElements[index] == 'X') {
+      return xButton; // Return the X icon
+    } else if (displayElements[index] == 'O') {
+      return oButton; // Return the O icon
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 
   void clearBoard() {
