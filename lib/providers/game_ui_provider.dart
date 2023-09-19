@@ -115,8 +115,9 @@ class GameUIProvider extends ChangeNotifier {
         displayElements[2] == displayElements[6] &&
         displayElements[2] != '') {
       showWiner(displayElements[2], context);
-    } else if (filledBoxes == 9) {
+    } else if (filledBoxes == 9 ) {
       showDraw(context);
+      draws++;
     }
     notifyListeners();
   }
@@ -152,8 +153,6 @@ class GameUIProvider extends ChangeNotifier {
       xWins++;
     } else if (winner == 'O') {
       yWins++;
-    } else {
-      draws++;
     }
   }
 
