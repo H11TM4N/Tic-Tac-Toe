@@ -41,7 +41,7 @@ class MainUI extends StatelessWidget {
                       itemBuilder: (BuildContext contex, index) {
                         return GestureDetector(
                           onTap: () {
-                            gameUIProvider.onTapped(index);
+                            gameUIProvider.onTapped(index, context);
                           },
                           child: Container(
                             decoration: BoxDecoration(

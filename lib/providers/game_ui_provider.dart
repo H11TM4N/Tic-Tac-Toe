@@ -33,7 +33,7 @@ class GameUIProvider extends ChangeNotifier {
   int filledBoxes = 0;
   List<String> displayElements = ['', '', '', '', '', '', '', '', ''];
 
-  void onTapped(int index) {
+  void onTapped(int index, BuildContext context) {
     if (xTurn && displayElements[index] == '') {
       displayElements[index] = 'X';
       filledBoxes++;
@@ -42,6 +42,7 @@ class GameUIProvider extends ChangeNotifier {
       filledBoxes++;
     }
     xTurn = !xTurn;
+    checkWinner(context);
     notifyListeners();
   }
 
@@ -72,5 +73,114 @@ class GameUIProvider extends ChangeNotifier {
     }
     filledBoxes = 0;
     notifyListeners();
+  }
+
+  void checkWinner(BuildContext context) {
+    if (displayElements[0] == displayElements[1] &&
+        displayElements[0] == displayElements[2] &&
+        displayElements[0] != '') {
+      showWiner(displayElements[0], context);
+    }
+    if (displayElements[3] == displayElements[4] &&
+        displayElements[3] == displayElements[5] &&
+        displayElements[3] != '') {
+      showWiner(displayElements[3], context);
+    }
+    if (displayElements[6] == displayElements[7] &&
+        displayElements[6] == displayElements[8] &&
+        displayElements[6] != '') {
+      showWiner(displayElements[6], context);
+    }
+    if (displayElements[1] == displayElements[4] &&
+        displayElements[1] == displayElements[7] &&
+        displayElements[1] != '') {
+      showWiner(displayElements[1], context);
+    }
+    if (displayElements[2] == displayElements[5] &&
+        displayElements[2] == displayElements[8] &&
+        displayElements[2] != '') {
+      showWiner(displayElements[2], context);
+    }
+    if (displayElements[0] == displayElements[3] &&
+        displayElements[0] == displayElements[6] &&
+        displayElements[0] != '') {
+      showWiner(displayElements[0], context);
+    }
+    if (displayElements[0] == displayElements[4] &&
+        displayElements[0] == displayElements[8] &&
+        displayElements[0] != '') {
+      showWiner(displayElements[0], context);
+    }
+    if (displayElements[2] == displayElements[4] &&
+        displayElements[2] == displayElements[6] &&
+        displayElements[2] != '') {
+      showWiner(displayElements[2], context);
+    } else if (filledBoxes == 9) {
+      showDraw(context);
+    }
+    notifyListeners();
+  }
+
+  void showWiner(String winner, BuildContext context) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('$winner won'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  clearBoard();
+                  Navigator.of(context).pop();
+                  notifyListeners();
+                },
+                child: const Text('Play again')),
+            TextButton(
+                onPressed: () {
+                  clearBoard();
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  notifyListeners();
+                },
+                child: const Text('Back to home')),
+          ],
+        );
+      },
+    );
+    if (winner == 'X') {
+      xWins++;
+    } else if (winner == 'O') {
+      yWins++;
+    } else {
+      draws++;
+    }
+  }
+
+  void showDraw(BuildContext context) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Its a tie'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  clearBoard();
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Play again')),
+            TextButton(
+                onPressed: () {
+                  clearBoard();
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Back to home')),
+          ],
+        );
+      },
+    );
   }
 }
