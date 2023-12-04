@@ -5,7 +5,7 @@ import 'package:tic_tac_toe/ui/widgets/widgets.dart';
 
 class JoinRoomScreen extends StatefulWidget {
   static String route = '/join-room';
-  const JoinRoomScreen({Key? key}) : super(key: key);
+  const JoinRoomScreen({super.key});
 
   @override
   State<JoinRoomScreen> createState() => _JoinRoomScreenState();

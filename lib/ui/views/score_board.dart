@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../../logic/providers/my_providers.dart';
 
 class Scoreboard extends StatelessWidget {
-  const Scoreboard({Key? key}) : super(key: key);
+  const Scoreboard({super.key});
 
   @override
   Widget build(BuildContext context) {

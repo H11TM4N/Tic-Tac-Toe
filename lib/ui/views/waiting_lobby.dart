@@ -5,7 +5,7 @@ import 'package:tic_tac_toe/ui/widgets/widgets.dart';
 import '../../logic/providers/my_providers.dart';
 
 class WaitingLobby extends StatefulWidget {
-  const WaitingLobby({Key? key}) : super(key: key);
+  const WaitingLobby({super.key});
 
   @override
   State<WaitingLobby> createState() => _WaitingLobbyState();

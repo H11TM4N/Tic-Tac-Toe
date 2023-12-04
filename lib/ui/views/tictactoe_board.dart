@@ -4,7 +4,7 @@ import 'package:tic_tac_toe/logic/controllers/controllers.dart';
 import 'package:tic_tac_toe/logic/providers/my_providers.dart';
 
 class TicTacToeBoard extends StatefulWidget {
-  const TicTacToeBoard({Key? key}) : super(key: key);
+  const TicTacToeBoard({super.key});
 
   @override
   State<TicTacToeBoard> createState() => _TicTacToeBoardState();

@@ -5,7 +5,7 @@ import 'package:tic_tac_toe/ui/widgets/widgets.dart';
 
 class MainMenuScreen extends StatelessWidget {
   static String route = '/main-menu';
-  const MainMenuScreen({Key? key}) : super(key: key);
+  const MainMenuScreen({super.key});
 
   void createRoom(BuildContext context) {
     Navigator.pushNamed(context, CreateRoomScreen.route);

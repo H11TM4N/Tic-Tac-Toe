@@ -7,7 +7,7 @@ import '../../logic/providers/my_providers.dart';
 
 class GameScreen extends StatefulWidget {
   static String route = '/game';
-  const GameScreen({Key? key}) : super(key: key);
+  const GameScreen({super.key});
 
   @override
   State<GameScreen> createState() => _GameScreenState();

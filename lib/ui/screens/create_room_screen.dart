@@ -5,7 +5,7 @@ import 'package:tic_tac_toe/ui/widgets/widgets.dart';
 
 class CreateRoomScreen extends StatefulWidget {
   static String route = '/create-room';
-  const CreateRoomScreen({Key? key}) : super(key: key);
+  const CreateRoomScreen({super.key});
 
   @override
   State<CreateRoomScreen> createState() => _CreateRoomScreenState();
