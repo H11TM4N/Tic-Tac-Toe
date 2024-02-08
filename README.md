@@ -1,24 +1,28 @@
-<!-- # NOTES_APP
+# TIC_TAC_TOE
 
-A simple notes app with extra features
+Description
 
 ## Table of contents
 
 - [Screenshot](#screenshot)
 - [Built with](#built-with)
+- [Features](#features)
 - [Useful resources](#useful-resources)
 - [Author](#author)
+- [Feedback](#feedback)
 
 ### Screenshot
 
-![](addscreenshot)
+![](./assets/screenshots/todo_section.jpg)
 
 ### Built with
 
 - Flutter
 - Dart
-- Bloc state management
-- Shared preferences(local storage)
+- Provider
+- Node.js
+- Express.js
+- Socket.io
 
 ### Features
 
@@ -49,4 +53,8 @@ A simple notes app with extra features
 ## Author
 
 - Github - [JER3MIAH](https://github.com/)
-- Twitter - [@yourusername](https://twitter.com/jeremiah_008) -->
+- Twitter - [@jeremiah_008](https://twitter.com/jeremiah_008)
+
+## Feedback
+
+Reac out out to me at [My mail](jeremiah.devv@gmail.com)
