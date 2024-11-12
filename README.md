@@ -1,60 +1,16 @@
-# TIC_TAC_TOE
+# tic_tac_toe
 
-Description
+A new Flutter project.
 
-## Table of contents
+## Getting Started
 
-- [Screenshot](#screenshot)
-- [Built with](#built-with)
-- [Features](#features)
-- [Useful resources](#useful-resources)
-- [Author](#author)
-- [Feedback](#feedback)
+This project is a starting point for a Flutter application.
 
-### Screenshot
+A few resources to get you started if this is your first Flutter project:
 
-![](./assets/screenshots/todo_section.jpg)
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-### Built with
-
-- Flutter
-- Dart
-- Provider
-- Node.js
-- Express.js
-- Socket.io
-
-### Features
-
-1. **Cross-Platform Compatibility:**
-
-   - Works seamlessly on both Android and iOS platforms.
-
-2. **User-Friendly Interface:**
-
-   - Intuitive design for easy navigation and task management.
-
-3. **Task Management:**
-
-   - Create, read, update, and delete (CRUD) notes and tasks.
-
-4. **Light and Dark Mode:**
-
-   - Toggle between light and dark mode based on user preference.
-
-5. **Offline Usage:**
-   - Access and manage tasks even without an internet connection.
-
-### Useful resources
-
-- [Bloc for state management](https://youtu.be/SDk_GldOtK8?si=NXnesVTmIGCNM3Hp) - Although, I didn't learn bloc through this resource, Its relatively new and updated so I'd I'd recommend it to anyone struglling with bloc or just wants to get started.
-- [Shared Preferences](https://youtu.be/szOllHT1S7Y?si=RjeXsmQLpugX2EVx) - This is a 10 mins tutorial that covers the basics of shared preferences. Its where I learnt so, watch if you're interested.
-
-## Author
-
-- Github - [JER3MIAH](https://github.com/)
-- Twitter - [@jeremiah_008](https://twitter.com/jeremiah_008)
-
-## Feedback
-
-Reac out out to me at [My mail](jeremiah.devv@gmail.com)
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
