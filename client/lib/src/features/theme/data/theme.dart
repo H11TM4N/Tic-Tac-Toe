@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 final baseTheme = ThemeData.light();
 
-ThemeData lightTheme = ThemeData(
-  textTheme: GoogleFonts.interTextTheme().copyWith(
+ThemeData appTheme = ThemeData(
+  textTheme: GoogleFonts.outfitTextTheme().copyWith(
     headlineMedium: TextStyle(
       fontSize: 25.sp,
       fontWeight: FontWeight.w700,
@@ -16,31 +16,9 @@ ThemeData lightTheme = ThemeData(
   ),
   useMaterial3: true,
   colorScheme: ColorScheme.light(
-    primary: appColors.blue,
-    onPrimary: appColors.white,
-    secondary: appColors.grey,
-    surface: appColors.white,
-    onSurface: appColors.black,
-  ),
-);
-
-ThemeData darkTheme = ThemeData(
-  textTheme: GoogleFonts.interTextTheme().copyWith(
-    headlineMedium: TextStyle(
-      fontSize: 25.sp,
-      fontWeight: FontWeight.w700,
-    ),
-    displayMedium: TextStyle(
-      fontSize: 18.sp,
-    ),
-  ),
-  useMaterial3: true,
-  colorScheme: ColorScheme.dark(
-    primary: appColors.blue,
-    onPrimary: appColors.white,
-    secondary: appColors.coolGrey,
-    surface: appColors.black,
-    onSurface: appColors.white,
+    primary: appColors.lightBlue,
+    onPrimary: appColors.darkNavy,
+    surface: appColors.darkNavy,
   ),
 );
 

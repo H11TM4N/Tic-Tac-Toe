@@ -1,6 +1,5 @@
+import 'package:tic_tac_toe/src/features/theme/data/theme.dart';
 import 'features/navigation/nav.dart';
-import 'features/theme/logic/theme_provider.dart';
-import 'features/theme/data/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +10,6 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final themeProv = ref.watch(themeProvider);
 
     return ScreenUtilInit(
       designSize: const Size(360, 690),
@@ -21,7 +19,7 @@ class MyApp extends ConsumerWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Converse',
-          theme: themeProv.isDarkMode ? darkTheme : lightTheme,
+          theme: appTheme,
           initialRoute: AppPages.initial,
           getPages: AppPages.routes,
         );

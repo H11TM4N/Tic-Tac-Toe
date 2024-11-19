@@ -22,9 +22,22 @@ class AppColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: shouldScroll
-          ? SingleChildScrollView(
-              child: Padding(
+      child: Center(
+        child: (shouldScroll
+            ? SingleChildScrollView(
+                child: Padding(
+                  padding: padding ??
+                      EdgeInsets.symmetric(horizontal: 15.w)
+                          .copyWith(top: 25.h),
+                  child: Column(
+                    mainAxisSize: mainAxisSize,
+                    mainAxisAlignment: mainAxisAlignment,
+                    crossAxisAlignment: crossAxisAlignment,
+                    children: children,
+                  ),
+                ),
+              )
+            : Padding(
                 padding: padding ??
                     EdgeInsets.symmetric(horizontal: 15.w).copyWith(top: 25.h),
                 child: Column(
@@ -33,18 +46,8 @@ class AppColumn extends StatelessWidget {
                   crossAxisAlignment: crossAxisAlignment,
                   children: children,
                 ),
-              ),
-            )
-          : Padding(
-              padding: padding ??
-                  EdgeInsets.symmetric(horizontal: 15.w).copyWith(top: 25.h),
-              child: Column(
-                mainAxisSize: mainAxisSize,
-                mainAxisAlignment: mainAxisAlignment,
-                crossAxisAlignment: crossAxisAlignment,
-                children: children,
-              ),
-            ),
+              )),
+      ),
     );
   }
 }
