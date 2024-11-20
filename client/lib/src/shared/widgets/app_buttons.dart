@@ -9,7 +9,7 @@ class AppButton extends HookWidget {
   final Color? color;
   final Color? hoverColor;
   final bool isLoading;
-  final TextStyle? textStyle;
+  final double? fontSize, height, width, buttonHeight;
   final BorderRadius? borderRadius;
   const AppButton({
     super.key,
@@ -19,8 +19,36 @@ class AppButton extends HookWidget {
     this.hoverColor,
     this.isLoading = false,
     this.borderRadius,
-    this.textStyle,
+    this.fontSize,
+    this.height,
+    this.width = double.infinity,
+    this.buttonHeight,
   });
+
+  factory AppButton.small({
+    required String title,
+    required VoidCallback? onTap,
+    Color? color,
+    Color? hoverColor,
+    bool isLoading = false,
+    double? fontSize,
+    double? height,
+    double? width,
+    BorderRadius? borderRadius,
+  }) {
+    return AppButton(
+      title: title,
+      onTap: onTap,
+      color: color,
+      hoverColor: hoverColor,
+      isLoading: isLoading,
+      fontSize: fontSize ?? 16,
+      height: height ?? 44,
+      width: width,
+      buttonHeight: 4,
+      borderRadius: borderRadius ?? BorderRadius.circular(8),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,20 +61,19 @@ class AppButton extends HookWidget {
           buttonColor.value = (hoverColor ?? appColors.lightBlueHover),
       onExit: (_) => buttonColor.value = (color ?? appColors.lightBlue),
       child: ChicletAnimatedButton(
-          height: 57,
+          width: width,
+          height: height ?? 57,
           onPressed: onTap,
-          buttonHeight: 5,
+          buttonHeight: buttonHeight ?? 5,
           backgroundColor: buttonColor.value,
-          width: double.infinity,
           child: Text(
             title,
-            style: textStyle ??
-                TextStyle(
-                  fontSize: 19,
-                  letterSpacing: 1.2,
-                  color: theme.onPrimary,
-                  fontWeight: FontWeight.w700,
-                ),
+            style: TextStyle(
+              fontSize: fontSize ?? 19,
+              letterSpacing: 1.2,
+              color: theme.onPrimary,
+              fontWeight: FontWeight.w700,
+            ),
           )),
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:tic_tac_toe/src/features/navigation/nav.dart';
+import 'package:tic_tac_toe/src/features/navigation/routes.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
 import 'package:tic_tac_toe/src/shared/utils/extensions.dart';
 
@@ -49,14 +51,18 @@ class HomeScreen extends HookWidget {
             title: 'NEW GAME (VS CPU)',
             color: appColors.lightYellow,
             hoverColor: appColors.lightYellowHover,
-            onTap: () {},
+            onTap: () {
+              AppNavigator.pushNamed(HomeRoutes.vsCPU);
+            },
           ),
           YBox(20),
           AppButton(
             title: 'NEW GAME (VS PLAYER)',
             color: appColors.lightBlue,
             hoverColor: appColors.lightBlueHover,
-            onTap: () {},
+            onTap: () {
+              AppNavigator.pushNamed(HomeRoutes.vsPlayer);
+            },
           ),
         ],
       ),
