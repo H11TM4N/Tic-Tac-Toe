@@ -9,13 +9,8 @@ const kBadRequestError = 'Bad request, please try again.';
 const kNotFoundError = 'An error occured, please try again.';
 const kRequestCancelledError = 'Request to server was cancelled.';
 
-
 //* socket events
 const JOIN_ROOM = 'JOIN_ROOM';
 const SEND_MOVE = 'SEND_MOVE';
 const RECEIVE_MOVE = 'RECEIVE_MOVE';
 
-
-const AVATARS = [
-  //TODO: Get avatars
-];

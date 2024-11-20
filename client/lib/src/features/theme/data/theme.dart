@@ -7,11 +7,11 @@ final baseTheme = ThemeData.light();
 ThemeData appTheme = ThemeData(
   textTheme: GoogleFonts.outfitTextTheme().copyWith(
     headlineMedium: TextStyle(
-      fontSize: 25.sp,
+      fontSize: 25,
       fontWeight: FontWeight.w700,
     ),
     displayMedium: TextStyle(
-      fontSize: 18.sp,
+      fontSize: 18,
     ),
   ),
   useMaterial3: true,

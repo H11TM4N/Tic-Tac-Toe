@@ -1,4 +1,3 @@
-import '../shared.dart';
 import 'package:flutter/material.dart';
 
 class AppInkWell extends StatelessWidget {
@@ -22,7 +21,7 @@ class AppInkWell extends StatelessWidget {
           overlayColor != null ? WidgetStatePropertyAll(overlayColor) : null,
       borderRadius: BorderRadius.circular(isCircle ? 30 : 12),
       child: Padding(
-        padding: EdgeInsets.all(10.w),
+        padding: EdgeInsets.all(10),
         child: child,
       ),
     );

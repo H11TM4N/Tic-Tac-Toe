@@ -16,7 +16,6 @@ dependencies:
   flutter_riverpod: ^2.5.1
   hooks_riverpod: ^2.5.1
   get: ^4.6.6
-  flutter_screenutil: ^5.9.0
   flutter_hooks: ^0.20.5
   flutter_svg: ^2.0.10+1
   socket_io_client: ^3.0.0

@@ -9,3 +9,4 @@ export 'sizedbox.dart';
 export 'svg_asset.dart';
 export 'shimmer_widget.dart';
 export 'responsive_layout.dart';
+export 'custom_tabbar.dart';

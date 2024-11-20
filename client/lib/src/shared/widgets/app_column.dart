@@ -1,4 +1,3 @@
-import 'package:tic_tac_toe/src/shared/shared.dart';
 import 'package:flutter/material.dart';
 
 class AppColumn extends StatelessWidget {
@@ -21,32 +20,19 @@ class AppColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Center(
-        child: (shouldScroll
-            ? SingleChildScrollView(
-                child: Padding(
-                  padding: padding ??
-                      EdgeInsets.symmetric(horizontal: 15.w)
-                          .copyWith(top: 25.h),
-                  child: Column(
-                    mainAxisSize: mainAxisSize,
-                    mainAxisAlignment: mainAxisAlignment,
-                    crossAxisAlignment: crossAxisAlignment,
-                    children: children,
-                  ),
-                ),
-              )
-            : Padding(
-                padding: padding ??
-                    EdgeInsets.symmetric(horizontal: 15.w).copyWith(top: 25.h),
-                child: Column(
-                  mainAxisSize: mainAxisSize,
-                  mainAxisAlignment: mainAxisAlignment,
-                  crossAxisAlignment: crossAxisAlignment,
-                  children: children,
-                ),
-              )),
+    return Center(
+      child: Container(
+        constraints: BoxConstraints(maxWidth: 600),
+        child: Padding(
+          padding:
+              padding ?? EdgeInsets.symmetric(horizontal: 15).copyWith(top: 25),
+          child: Column(
+            mainAxisSize: mainAxisSize,
+            mainAxisAlignment: mainAxisAlignment,
+            crossAxisAlignment: crossAxisAlignment,
+            children: children,
+          ),
+        ),
       ),
     );
   }

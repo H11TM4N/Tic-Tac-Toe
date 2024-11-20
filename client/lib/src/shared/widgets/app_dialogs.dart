@@ -6,7 +6,7 @@ class AppDialog {
   static void dialog(Widget content, {Color? bgColor}) {
     Get.dialog(
       Dialog(
-        insetPadding: EdgeInsets.symmetric(horizontal: 20.w),
+        insetPadding: EdgeInsets.symmetric(horizontal: 20),
         backgroundColor: bgColor ?? appColors.semiDarkNavy,
         shadowColor: bgColor ?? appColors.semiDarkNavy,
         child: content,

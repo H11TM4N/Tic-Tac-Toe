@@ -1,21 +1,13 @@
 const String baseSvgPath = 'assets/svgs/';
 const String basePngPath = 'assets/pngs/';
 
-// app icon
-final String appIcon = 'app-icon'.png;
 
-// svgs
-final String sunIcon = 'sunIcon'.svg;
-final String moonIcon = 'moonIcon'.svg;
-final String searchIcon = 'searchIcon'.svg;
-final String drawerIcon = 'drawerIcon'.svg;
-final String settingIcon = 'settingIcon'.svg;
-final String globeIcon = 'globeIcon'.svg;
-final String logoutIcon = 'logoutIcon'.svg;
-final String trashIcon = 'trashIcon'.svg;
-final String sendIcon = 'sendIcon'.svg;
-final String editIcon = 'editIcon'.svg;
-final String notitficationIcon = 'notitfication_icon'.svg;
+final String xAndO = 'x-and-o'.svg;
+final String oOutlined = 'o-outlined'.svg;
+final String oFilled = 'o-filled'.svg;
+final String xOutlined = 'x-outlined'.svg;
+final String xFilled = 'x-filled'.svg;
+
 
 // extensions
 extension ImageExtension on String {

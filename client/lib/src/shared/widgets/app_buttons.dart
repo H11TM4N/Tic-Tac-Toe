@@ -47,8 +47,8 @@ class AppButton extends HookWidget {
             curve: Curves.easeInOut,
             alignment: Alignment.center,
             // width: double.infinity,
-            height: shadowVisible.value ? 64.h : 67.h,
-            margin: EdgeInsets.only(top: shadowVisible.value ? 4.h : 0),
+            height: shadowVisible.value ? 64 : 67,
+            margin: EdgeInsets.only(top: shadowVisible.value ? 4 : 0),
             decoration: BoxDecoration(
               color: buttonColor.value,
               borderRadius: borderRadius ?? BorderRadius.circular(15),
@@ -70,7 +70,7 @@ class AppButton extends HookWidget {
                     title,
                     style: textStyle ??
                         TextStyle(
-                          fontSize: 20.sp,
+                          fontSize: 20,
                           color: theme.onPrimary,
                           fontWeight: FontWeight.w700,
                         ),
