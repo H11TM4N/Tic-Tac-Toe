@@ -1,11 +1,10 @@
 import 'package:tic_tac_toe/src/shared/shared.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 final baseTheme = ThemeData.light();
 
 ThemeData appTheme = ThemeData(
-  textTheme: GoogleFonts.outfitTextTheme().copyWith(
+  textTheme: TextTheme(
     headlineMedium: TextStyle(
       fontSize: 25,
       fontWeight: FontWeight.w700,
@@ -13,6 +12,8 @@ ThemeData appTheme = ThemeData(
     displayMedium: TextStyle(
       fontSize: 18,
     ),
+  ).apply(
+    fontFamily: outfit,
   ),
   useMaterial3: true,
   colorScheme: ColorScheme.light(

@@ -1,7 +1,58 @@
+import 'package:chiclet/chiclet.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import '../shared.dart';
 import 'package:flutter/material.dart';
 
+class AppButton extends HookWidget {
+  final String title;
+  final VoidCallback? onTap;
+  final Color? color;
+  final Color? hoverColor;
+  final bool isLoading;
+  final TextStyle? textStyle;
+  final BorderRadius? borderRadius;
+  const AppButton({
+    super.key,
+    required this.title,
+    required this.onTap,
+    this.color,
+    this.hoverColor,
+    this.isLoading = false,
+    this.borderRadius,
+    this.textStyle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
+    final buttonColor = useState<Color>(color ?? appColors.lightBlue);
+
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) =>
+          buttonColor.value = (hoverColor ?? appColors.lightBlueHover),
+      onExit: (_) => buttonColor.value = (color ?? appColors.lightBlue),
+      child: ChicletAnimatedButton(
+          height: 57,
+          onPressed: onTap,
+          buttonHeight: 5,
+          backgroundColor: buttonColor.value,
+          width: double.infinity,
+          child: Text(
+            title,
+            style: textStyle ??
+                TextStyle(
+                  fontSize: 19,
+                  letterSpacing: 1.2,
+                  color: theme.onPrimary,
+                  fontWeight: FontWeight.w700,
+                ),
+          )),
+    );
+  }
+}
+
+/*
 class AppButton extends HookWidget {
   final String title;
   final VoidCallback? onTap;
@@ -47,8 +98,8 @@ class AppButton extends HookWidget {
             curve: Curves.easeInOut,
             alignment: Alignment.center,
             // width: double.infinity,
-            height: shadowVisible.value ? 64 : 67,
-            margin: EdgeInsets.only(top: shadowVisible.value ? 4 : 0),
+            height: 64,
+            margin: EdgeInsets.only(bottom: shadowVisible.value ? 4 : 0),
             decoration: BoxDecoration(
               color: buttonColor.value,
               borderRadius: borderRadius ?? BorderRadius.circular(15),
@@ -56,7 +107,7 @@ class AppButton extends HookWidget {
                   ? [
                       BoxShadow(
                         color: shadowColor.value,
-                        offset: Offset(0, 8),
+                        offset: Offset(0, 6),
                         blurRadius: 0, // No blur
                       )
                     ]
@@ -81,3 +132,4 @@ class AppButton extends HookWidget {
     );
   }
 }
+*/

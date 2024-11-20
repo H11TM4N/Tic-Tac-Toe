@@ -14,3 +14,4 @@ const JOIN_ROOM = 'JOIN_ROOM';
 const SEND_MOVE = 'SEND_MOVE';
 const RECEIVE_MOVE = 'RECEIVE_MOVE';
 
+const outfit = 'Outfit';
