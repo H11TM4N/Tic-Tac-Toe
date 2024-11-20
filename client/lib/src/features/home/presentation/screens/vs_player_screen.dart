@@ -22,7 +22,13 @@ class VsPlayerScreen extends ConsumerWidget {
                 xTurn: gameState.xTurn,
               ),
               RestartButton(
-                onTap: () {},
+                onTap: () {
+                  AppDialog.dialog(
+                    RestartGameDialog(
+                      onRestart: () => ref.read(gameProvider.notifier).clearScoreBoard(),
+                    ),
+                  );
+                },
               ),
             ],
           ),

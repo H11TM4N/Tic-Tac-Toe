@@ -27,18 +27,29 @@ class GameStateNotifier extends StateNotifier<GameState> {
       final newDisplayTiles = List<String>.from(state.displayTiles);
       newDisplayTiles[index] = state.xTurn ? 'x' : 'o';
 
+      final filledTiles = newDisplayTiles.where((e) => e.isNotEmpty).length;
+
       state = state.copyWith(
         displayTiles: newDisplayTiles,
         xTurn: !state.xTurn,
-        filledTiles: state.filledTiles + 1,
+        filledTiles: filledTiles,
       );
 
       _checkWinner();
     }
   }
 
+  void goToNextRound() {
+    state = state.copyWith(
+      displayTiles: List.filled(9, ''),
+    );
+  }
+
   void _checkWinner() {
     // Checking rows
+    if (state.filledTiles == 9) {
+      _showDrawDialog();
+    }
     if (state.displayTiles[0] == state.displayTiles[1] &&
         state.displayTiles[0] == state.displayTiles[2] &&
         state.displayTiles[0] != '') {
@@ -82,8 +93,6 @@ class GameStateNotifier extends StateNotifier<GameState> {
         state.displayTiles[2] == state.displayTiles[6] &&
         state.displayTiles[2] != '') {
       _showWinDialog(state.displayTiles[2]);
-    } else if (state.filledTiles == 9) {
-      _showDrawDialog();
     }
   }
 
@@ -91,6 +100,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
     AppDialog.dialog(GameResultDialog(
       player1: winner,
       result: winner == state.player1 ? GameResult.win : GameResult.lose,
+      onNextRound: goToNextRound,
     ));
   }
 
@@ -98,6 +108,7 @@ class GameStateNotifier extends StateNotifier<GameState> {
     AppDialog.dialog(GameResultDialog(
       player1: '',
       result: GameResult.draw,
+      onNextRound: goToNextRound,
     ));
   }
 

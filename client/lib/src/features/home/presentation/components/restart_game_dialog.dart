@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/src/features/navigation/nav.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
 
 class RestartGameDialog extends StatelessWidget {
-  const RestartGameDialog({super.key});
+  final VoidCallback onRestart;
+  const RestartGameDialog({
+    super.key,
+    required this.onRestart,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +32,7 @@ class RestartGameDialog extends StatelessWidget {
                 title: 'NO, CANCEL',
                 color: appColors.sliver,
                 hoverColor: appColors.sliverhover,
-                onTap: () {},
+                onTap: () => AppNavigator.popDialog(),
               ),
               XBox(12),
               AppButton.small(
@@ -35,7 +40,10 @@ class RestartGameDialog extends StatelessWidget {
                 title: 'YES, RESTART',
                 color: appColors.lightYellow,
                 hoverColor: appColors.lightYellowHover,
-                onTap: () {},
+                onTap: (){
+                  onRestart();
+                  AppNavigator.popDialog();
+                },
               ),
             ],
           ),

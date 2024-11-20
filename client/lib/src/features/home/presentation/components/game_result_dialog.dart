@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe/src/features/home/data/enums/game_result.dart';
+import 'package:tic_tac_toe/src/features/navigation/nav.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
 
 class GameResultDialog extends StatelessWidget {
   final String player1;
   final GameResult result;
+  final VoidCallback onNextRound;
   const GameResultDialog({
     super.key,
     required this.player1,
     required this.result,
+    required this.onNextRound,
   });
 
   @override
@@ -62,7 +65,9 @@ class GameResultDialog extends StatelessWidget {
                 title: 'QUIT',
                 color: appColors.sliver,
                 hoverColor: appColors.sliverhover,
-                onTap: () {},
+                onTap: () {
+                  AppNavigator.popRoute();
+                },
               ),
               XBox(12),
               AppButton.small(
@@ -70,7 +75,10 @@ class GameResultDialog extends StatelessWidget {
                 title: 'NEXT ROUND',
                 color: appColors.lightYellow,
                 hoverColor: appColors.lightYellowHover,
-                onTap: () {},
+                onTap: (){
+                  onNextRound();
+                  AppNavigator.popDialog();
+                },
               ),
             ],
           ),
