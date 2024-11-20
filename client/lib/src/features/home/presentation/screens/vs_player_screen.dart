@@ -13,28 +13,34 @@ class VsPlayerScreen extends ConsumerWidget {
 
     return Scaffold(
       body: AppColumn(
+        shouldScroll: false,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Stack(
+            alignment: Alignment.center,
             children: [
-              SvgAsset(path: xAndO),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SvgAsset(path: xAndO),
+                  RestartButton(
+                    onTap: () {
+                      AppDialog.dialog(
+                        RestartGameDialog(
+                          onRestart: () =>
+                              ref.read(gameProvider.notifier).clearScoreBoard(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
               TurnContainer(
                 xTurn: gameState.xTurn,
-              ),
-              RestartButton(
-                onTap: () {
-                  AppDialog.dialog(
-                    RestartGameDialog(
-                      onRestart: () => ref.read(gameProvider.notifier).clearScoreBoard(),
-                    ),
-                  );
-                },
               ),
             ],
           ),
           YBox(20),
-          SizedBox(
-            height: 461,
+          Expanded(
             child: GridView.builder(
               itemCount: 9,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -54,7 +60,29 @@ class VsPlayerScreen extends ConsumerWidget {
                 );
               },
             ),
-          )
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ScoreContainer(
+                title: 'X (YOU)',
+                score: gameState.xWins,
+                color: appColors.lightBlue,
+              ),
+              XBox(15),
+              ScoreContainer(
+                title: 'TIES',
+                score: gameState.ties,
+                color: appColors.sliver,
+              ),
+              XBox(15),
+              ScoreContainer(
+                title: 'O (CPU)',
+                score: gameState.oWins,
+                color: appColors.lightYellow,
+              ),
+            ],
+          ),
         ],
       ),
     );

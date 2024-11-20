@@ -97,6 +97,10 @@ class GameStateNotifier extends StateNotifier<GameState> {
   }
 
   void _showWinDialog(String winner) {
+    state = state.copyWith(
+      xWins: winner == 'x' ? (state.xWins + 1) : null,
+      oWins: winner == 'o' ? (state.oWins + 1) : null,
+    );
     AppDialog.dialog(GameResultDialog(
       player1: winner,
       result: winner == state.player1 ? GameResult.win : GameResult.lose,
@@ -105,6 +109,9 @@ class GameStateNotifier extends StateNotifier<GameState> {
   }
 
   void _showDrawDialog() {
+    state = state.copyWith(
+      ties: state.ties + 1,
+    );
     AppDialog.dialog(GameResultDialog(
       player1: '',
       result: GameResult.draw,
