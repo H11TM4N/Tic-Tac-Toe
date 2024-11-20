@@ -7,6 +7,7 @@ final String oOutlined = 'o-outlined'.svg;
 final String oFilled = 'o-filled'.svg;
 final String xOutlined = 'x-outlined'.svg;
 final String xFilled = 'x-filled'.svg;
+final String restartIcon = 'restartIcon'.svg;
 
 
 // extensions

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe/src/features/home/data/game_result.dart';
+import 'package:tic_tac_toe/src/features/home/data/enums/game_result.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
 
 class GameResultDialog extends StatelessWidget {

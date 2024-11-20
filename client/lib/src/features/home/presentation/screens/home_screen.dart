@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tic_tac_toe/src/features/home/logic/providers/game_provider.dart';
+import 'package:tic_tac_toe/src/features/home/logic/providers/player_one_provider.dart';
 import 'package:tic_tac_toe/src/features/navigation/nav.dart';
 import 'package:tic_tac_toe/src/features/navigation/routes.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
 import 'package:tic_tac_toe/src/shared/utils/extensions.dart';
 
-class HomeScreen extends HookWidget {
+class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final tabController = useTabController(initialLength: 2);
 
     return Scaffold(
@@ -61,6 +64,10 @@ class HomeScreen extends HookWidget {
             color: appColors.lightBlue,
             hoverColor: appColors.lightBlueHover,
             onTap: () {
+              ref.read(gameProvider.notifier).startGame(
+                    numOfTiles: 9,
+                    player1: ref.read(playerOneProvider),
+                  );
               AppNavigator.pushNamed(HomeRoutes.vsPlayer);
             },
           ),

@@ -9,4 +9,5 @@ class AppColors {
   Color semiDarkNavy = const Color(0xFF1F3641);
   Color sliver = const Color(0xFFA8BFC9);
   Color sliverhover = const Color(0xFFDBE8ED);
+  Color shadow = const Color(0xFF10212A);
 }

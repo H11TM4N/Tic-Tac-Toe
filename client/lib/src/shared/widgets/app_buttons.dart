@@ -79,6 +79,47 @@ class AppButton extends HookWidget {
   }
 }
 
+class AppIconButton extends HookWidget {
+  final String icon;
+  final VoidCallback? onTap;
+  final Color? color;
+  final Color? hoverColor;
+  final double? height, width;
+  final BorderRadius? borderRadius;
+  const AppIconButton({
+    super.key,
+    required this.icon,
+    required this.onTap,
+    this.color,
+    this.hoverColor,
+    this.borderRadius,
+    this.height,
+    this.width,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final buttonColor = useState<Color>(color ?? appColors.lightBlue);
+
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) =>
+          buttonColor.value = (hoverColor ?? appColors.lightBlueHover),
+      onExit: (_) => buttonColor.value = (color ?? appColors.lightBlue),
+      child: ChicletAnimatedButton(
+        width: width != null ? (width! + 5) : width,
+        height: height ?? 40,
+        onPressed: onTap,
+        borderRadius: 8,
+        buttonHeight: 5,
+        backgroundColor: buttonColor.value,
+        child: SvgAsset(path: icon),
+      ),
+    );
+  }
+}
+
+
 /*
 class AppButton extends HookWidget {
   final String title;
