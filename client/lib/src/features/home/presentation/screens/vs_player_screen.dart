@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tic_tac_toe/src/features/home/logic/providers/game_provider.dart';
+import 'package:tic_tac_toe/src/features/home/logic/providers/pvp_game_provider.dart';
 import 'package:tic_tac_toe/src/features/home/presentation/components/components.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
 
@@ -9,12 +9,13 @@ class VsPlayerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final gameState = ref.watch(gameProvider);
+    final gameState = ref.watch(pvpGameProvider);
 
     return Scaffold(
       body: AppColumn(
-        shouldScroll: false,
+        centerContent: false,
         children: [
+          if (DeviceType(context).isMobile) YBox(15),
           Stack(
             alignment: Alignment.center,
             children: [
@@ -26,8 +27,9 @@ class VsPlayerScreen extends ConsumerWidget {
                     onTap: () {
                       AppDialog.dialog(
                         RestartGameDialog(
-                          onRestart: () =>
-                              ref.read(gameProvider.notifier).clearScoreBoard(),
+                          onRestart: () => ref
+                              .read(pvpGameProvider.notifier)
+                              .clearScoreBoard(),
                         ),
                       );
                     },
@@ -39,12 +41,15 @@ class VsPlayerScreen extends ConsumerWidget {
               ),
             ],
           ),
-          YBox(20),
-          Expanded(
+          YBox(50),
+          SizedBox(
+            height: 430,
             child: GridView.builder(
-              itemCount: 9,
+              itemCount: gameState.displayTiles.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
+                crossAxisCount: calculateCrossAxisCount(
+                  gameState.displayTiles.length,
+                ),
                 childAspectRatio: 1,
                 mainAxisSpacing: 15,
                 crossAxisSpacing: 15,
@@ -53,36 +58,43 @@ class VsPlayerScreen extends ConsumerWidget {
                 return PlacementTile(
                   player1: gameState.xTurn ? gameState.player1 : 'o',
                   display: gameState.displayTiles[index],
-                  tileFilled: false,
+                  tileFilled: gameState.winTiles.contains(index),
                   onTap: () {
-                    ref.read(gameProvider.notifier).makeMove(index);
+                    ref.read(pvpGameProvider.notifier).makeMove(index);
                   },
                 );
               },
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // YBox(20),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              ScoreContainer(
-                title: 'X (YOU)',
-                score: gameState.xWins,
-                color: appColors.lightBlue,
-              ),
-              XBox(15),
-              ScoreContainer(
-                title: 'TIES',
-                score: gameState.ties,
-                color: appColors.sliver,
-              ),
-              XBox(15),
-              ScoreContainer(
-                title: 'O (CPU)',
-                score: gameState.oWins,
-                color: appColors.lightYellow,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ScoreContainer(
+                    title: 'X (P${gameState.player1 == 'x' ? 1 : 2})',
+                    score: gameState.xWins,
+                    color: appColors.lightBlue,
+                  ),
+                  XBox(15),
+                  ScoreContainer(
+                    title: 'TIES',
+                    score: gameState.ties,
+                    color: appColors.sliver,
+                  ),
+                  XBox(15),
+                  ScoreContainer(
+                    title: 'O (P${gameState.player1 == 'x' ? 2 : 1})',
+                    score: gameState.oWins,
+                    color: appColors.lightYellow,
+                  ),
+                ],
               ),
             ],
           ),
+          // YBox(20),
         ],
       ),
     );

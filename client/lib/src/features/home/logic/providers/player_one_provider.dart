@@ -11,7 +11,7 @@ class PlayerStateNotifier extends StateNotifier<String> {
 
   void selectMark(String value) {
     if (state != value) {
-      state = value;
+      state = value.toLowerCase();
       log('Player one mark: $state');
     }
   }

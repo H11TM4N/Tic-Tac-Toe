@@ -30,6 +30,7 @@ class AppNavigator {
 
   //? Use to pop the current route
   static void popRoute() {
+    popDialog();
     Get.back();
   }
 

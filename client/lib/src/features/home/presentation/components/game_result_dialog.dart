@@ -7,11 +7,13 @@ class GameResultDialog extends StatelessWidget {
   final String player1;
   final GameResult result;
   final VoidCallback onNextRound;
+  final bool isPvP;
   const GameResultDialog({
     super.key,
     required this.player1,
     required this.result,
     required this.onNextRound,
+    required this.isPvP,
   });
 
   @override
@@ -31,7 +33,11 @@ class GameResultDialog extends StatelessWidget {
             )
           else ...[
             AppText(
-              result == GameResult.win ? 'YOU WON!' : 'OH NO, YOU LOST…',
+              isPvP
+                  ? 'PLAYER ${player1 == 'x' && result == GameResult.win ? 1 : 2}  WINS!'
+                  : (result == GameResult.win
+                      ? 'YOU WON!'
+                      : 'OH NO, YOU LOST…'),
               color: appColors.sliver,
               fontSize: 14,
               fontWeight: FontWeight.w700,
@@ -75,7 +81,7 @@ class GameResultDialog extends StatelessWidget {
                 title: 'NEXT ROUND',
                 color: appColors.lightYellow,
                 hoverColor: appColors.lightYellowHover,
-                onTap: (){
+                onTap: () {
                   onNextRound();
                   AppNavigator.popDialog();
                 },

@@ -7,6 +7,7 @@ class AppColumn extends StatelessWidget {
   final CrossAxisAlignment crossAxisAlignment;
   final EdgeInsetsGeometry? padding;
   final bool shouldScroll;
+  final bool centerContent;
 
   const AppColumn({
     super.key,
@@ -16,16 +17,16 @@ class AppColumn extends StatelessWidget {
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.padding,
     this.shouldScroll = true,
+    this.centerContent = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        constraints: BoxConstraints(maxWidth: 600),
+    Widget content = Container(
+      constraints: BoxConstraints(maxWidth: 600),
+      child: SafeArea(
         child: Padding(
-          padding:
-              padding ?? EdgeInsets.symmetric(horizontal: 15).copyWith(top: 25),
+          padding: padding ?? EdgeInsets.symmetric(horizontal: 15),
           child: shouldScroll
               ? SingleChildScrollView(
                   child: Column(
@@ -44,5 +45,7 @@ class AppColumn extends StatelessWidget {
         ),
       ),
     );
+
+    return centerContent ? Center(child: content) : content;
   }
 }
