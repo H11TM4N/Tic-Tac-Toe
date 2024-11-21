@@ -13,7 +13,7 @@ class VsCpuScreen extends ConsumerWidget {
 
     return Scaffold(
       body: AppColumn(
-        centerContent: false,
+        centerContent: !DeviceType(context).isMobile,
         children: [
           if (DeviceType(context).isMobile) YBox(15),
           Stack(
