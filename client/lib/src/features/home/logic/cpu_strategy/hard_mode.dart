@@ -1,82 +1,57 @@
-import 'dart:math';
+import 'package:tic_tac_toe/src/features/home/data/winning_conditions.dart';
 import 'cpu_strategy.dart';
 
 class HardCpuStrategy implements CpuStrategy {
+  final String cpuSymbol;
+
+  HardCpuStrategy(this.cpuSymbol);
+
+  String get opponentSymbol => cpuSymbol == 'x' ? 'o' : 'x';
+
   @override
-  int decideMove(List<String> board) {
-    int bestScore = -9999;
-    int bestMove = -1;
-
-    for (int i = 0; i < board.length; i++) {
-      if (board[i] == '') {
-        board[i] = 'o'; // CPU plays as 'o'
-        int score = _minimax(board, false);
-        board[i] = ''; // Undo move
-        if (score > bestScore) {
-          bestScore = score;
-          bestMove = i;
-        }
-      }
+  int decideMove(List<String> displayTiles) {
+    //* Check if CPU can win
+    for (var condition in WINNING_CONDITIONS) {
+      int move = _findWinningMove(displayTiles, condition, cpuSymbol);
+      if (move != -1) return move;
     }
 
-    return bestMove;
+    //* Check if CPU needs to block opponent
+    for (var condition in WINNING_CONDITIONS) {
+      int move = _findWinningMove(displayTiles, condition, opponentSymbol);
+      if (move != -1) return move;
+    }
+
+    //* Take the center if available
+    if (displayTiles[4] == '') return 4;
+
+    //* Take a corner if available
+    List<int> corners = [0, 2, 6, 8];
+    for (var corner in corners) {
+      if (displayTiles[corner] == '') return corner;
+    }
+
+    //* Take any available move
+    for (int i = 0; i < displayTiles.length; i++) {
+      if (displayTiles[i] == '') return i;
+    }
+
+    return -1; // No valid move
   }
 
-  int _minimax(List<String> board, bool isMaximizing) {
-    String? winner = _checkWinner(board);
-    if (winner != null) {
-      if (winner == 'o') return 10;
-      if (winner == 'x') return -10;
-      return 0;
-    }
+  int _findWinningMove(
+      List<String> displayTiles, List<int> condition, String symbol) {
+    int count = 0;
+    int emptyIndex = -1;
 
-    if (isMaximizing) {
-      int bestScore = -9999;
-      for (int i = 0; i < board.length; i++) {
-        if (board[i] == '') {
-          board[i] = 'o';
-          int score = _minimax(board, false);
-          board[i] = '';
-          bestScore = max(score, bestScore);
-        }
-      }
-      return bestScore;
-    } else {
-      int bestScore = 9999;
-      for (int i = 0; i < board.length; i++) {
-        if (board[i] == '') {
-          board[i] = 'x';
-          int score = _minimax(board, true);
-          board[i] = '';
-          bestScore = min(score, bestScore);
-        }
-      }
-      return bestScore;
-    }
-  }
-
-  String? _checkWinner(List<String> board) {
-    List<List<int>> winningConditions = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-
-    for (var condition in winningConditions) {
-      if (board[condition[0]] == board[condition[1]] &&
-          board[condition[0]] == board[condition[2]] &&
-          board[condition[0]] != '') {
-        return board[condition[0]];
+    for (var index in condition) {
+      if (displayTiles[index] == symbol) {
+        count++;
+      } else if (displayTiles[index] == '') {
+        emptyIndex = index;
       }
     }
 
-    if (board.every((tile) => tile != '')) return 'draw';
-
-    return null;
+    return count == 2 && emptyIndex != -1 ? emptyIndex : -1;
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tic_tac_toe/src/features/home/data/models/game_state.dart';
+import 'package:tic_tac_toe/src/features/home/data/winning_conditions.dart';
+import 'package:tic_tac_toe/src/features/home/logic/providers/player_one_provider.dart';
 import 'package:tic_tac_toe/src/features/home/presentation/components/game_result_dialog.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
 
@@ -7,19 +9,21 @@ import '../../data/enums/game_result.dart';
 
 final pvpGameProvider =
     StateNotifierProvider<PvPGameStateNotifier, GameState>((ref) {
-  return PvPGameStateNotifier();
+  return PvPGameStateNotifier(player1: ref.read(playerOneProvider));
 });
 
 class PvPGameStateNotifier extends StateNotifier<GameState> {
-  PvPGameStateNotifier() : super(GameState.empty());
+  final String player1;
+  PvPGameStateNotifier({required this.player1,}) : super(GameState.empty());
 
   void startGame({
     required int numOfTiles,
-    required String player1,
+    required bool xTurn,
   }) {
     state = GameState.empty().copyWith(
       player1: player1,
       displayTiles: List<String>.filled(numOfTiles, ''),
+      xTurn: xTurn,
     );
   }
 
@@ -49,19 +53,7 @@ class PvPGameStateNotifier extends StateNotifier<GameState> {
   }
 
   void _checkWinner() {
-    // Winning conditions
-    List<List<int>> winningConditions = [
-      [0, 1, 2], // Row 1
-      [3, 4, 5], // Row 2
-      [6, 7, 8], // Row 3
-      [0, 3, 6], // Column 1
-      [1, 4, 7], // Column 2
-      [2, 5, 8], // Column 3
-      [0, 4, 8], // Diagonal 1
-      [2, 4, 6], // Diagonal 2
-    ];
-
-    for (var condition in winningConditions) {
+    for (var condition in WINNING_CONDITIONS) {
       if (state.displayTiles[condition[0]] ==
               state.displayTiles[condition[1]] &&
           state.displayTiles[condition[0]] ==
@@ -89,6 +81,7 @@ class PvPGameStateNotifier extends StateNotifier<GameState> {
       player1: winner,
       result: winner == state.player1 ? GameResult.win : GameResult.lose,
       onNextRound: goToNextRound,
+      onQuit: clearScoreBoard,
     ));
   }
 
@@ -101,10 +94,13 @@ class PvPGameStateNotifier extends StateNotifier<GameState> {
       player1: '',
       result: GameResult.draw,
       onNextRound: goToNextRound,
+      onQuit: clearScoreBoard,
     ));
   }
 
   void clearScoreBoard() {
-    state = GameState.empty();
+    state = GameState.empty().copyWith(
+      player1: player1,
+    );
   }
 }

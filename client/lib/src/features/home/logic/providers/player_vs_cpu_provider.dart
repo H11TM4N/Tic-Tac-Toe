@@ -1,32 +1,40 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tic_tac_toe/src/features/home/data/models/game_state.dart';
+import 'package:tic_tac_toe/src/features/home/data/winning_conditions.dart';
 import 'package:tic_tac_toe/src/features/home/logic/cpu_strategy/hard_mode.dart';
 import 'package:tic_tac_toe/src/features/home/presentation/components/game_result_dialog.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
 
 import '../../data/enums/game_result.dart';
+import 'player_one_provider.dart';
 
 final playerVsCpuGameProvider =
     StateNotifierProvider<PlayerVsCpuGameStateNotifier, GameState>((ref) {
-  return PlayerVsCpuGameStateNotifier();
+  return PlayerVsCpuGameStateNotifier(player1: ref.read(playerOneProvider));
 });
 
 class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
-  PlayerVsCpuGameStateNotifier() : super(GameState.empty());
+  final String player1;
+  PlayerVsCpuGameStateNotifier({required this.player1,}) : super(GameState.empty());
 
   void startGame({
     required int numOfTiles,
-    required String player1,
+    required bool xTurn,
   }) {
     state = GameState.empty().copyWith(
       player1: player1,
       displayTiles: List<String>.filled(numOfTiles, ''),
+      xTurn: xTurn,
     );
+    if ((state.player1 == 'x' ? !state.xTurn : state.xTurn)) {
+      Future.delayed(Duration(seconds: 1), _cpuMove);
+    }
   }
 
   void makeMove(int index) {
     // Player's turn
-    if (state.displayTiles[index] == '' && state.xTurn) {
+    if (state.displayTiles[index] == '' &&
+        (state.player1 == 'x' ? state.xTurn : !state.xTurn)) {
       _placeMove(index, state.player1);
       if (!_checkWinner()) {
         // CPU plays after the player
@@ -36,8 +44,9 @@ class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
   }
 
   void _cpuMove() {
-    final move = HardCpuStrategy().decideMove(state.displayTiles);
-    _placeMove(move, state.player1 == 'x' ? 'o' : 'x');
+    String cpuSymbol = state.player1 == 'x' ? 'o' : 'x';
+    final move = HardCpuStrategy(cpuSymbol).decideMove(state.displayTiles);
+    _placeMove(move, cpuSymbol);
     _checkWinner();
   }
 
@@ -55,18 +64,7 @@ class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
   }
 
   bool _checkWinner() {
-    List<List<int>> winningConditions = [
-      [0, 1, 2], // Row 1
-      [3, 4, 5], // Row 2
-      [6, 7, 8], // Row 3
-      [0, 3, 6], // Column 1
-      [1, 4, 7], // Column 2
-      [2, 5, 8], // Column 3
-      [0, 4, 8], // Diagonal 1
-      [2, 4, 6], // Diagonal 2
-    ];
-
-    for (var condition in winningConditions) {
+    for (var condition in WINNING_CONDITIONS) {
       if (state.displayTiles[condition[0]] ==
               state.displayTiles[condition[1]] &&
           state.displayTiles[condition[0]] ==
@@ -96,6 +94,7 @@ class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
       player1: state.player1,
       result: winner == state.player1 ? GameResult.win : GameResult.lose,
       onNextRound: goToNextRound,
+      onQuit: clearScoreBoard,
     ));
   }
 
@@ -108,6 +107,7 @@ class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
       player1: state.player1,
       result: GameResult.draw,
       onNextRound: goToNextRound,
+      onQuit: clearScoreBoard,
     ));
   }
 
@@ -118,12 +118,14 @@ class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
       winTiles: [],
     );
     // Check if the CPU starts the new round
-    if (!state.xTurn) {
+    if (!(state.player1 == 'x' ? state.xTurn : !state.xTurn)) {
       Future.delayed(Duration(seconds: 1), _cpuMove);
     }
   }
 
   void clearScoreBoard() {
-    state = GameState.empty();
+    state = GameState.empty().copyWith(
+      player1: player1,
+    );
   }
 }

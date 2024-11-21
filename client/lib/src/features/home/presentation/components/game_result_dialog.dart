@@ -6,13 +6,14 @@ import 'package:tic_tac_toe/src/shared/shared.dart';
 class GameResultDialog extends StatelessWidget {
   final String player1;
   final GameResult result;
-  final VoidCallback onNextRound;
+  final VoidCallback onNextRound, onQuit;
   final bool isPvP;
   const GameResultDialog({
     super.key,
     required this.player1,
     required this.result,
     required this.onNextRound,
+    required this.onQuit,
     required this.isPvP,
   });
 
@@ -72,6 +73,7 @@ class GameResultDialog extends StatelessWidget {
                 color: appColors.sliver,
                 hoverColor: appColors.sliverhover,
                 onTap: () {
+                  onQuit();
                   AppNavigator.popRoute();
                 },
               ),

@@ -56,7 +56,7 @@ class HomeScreen extends HookConsumerWidget {
             onTap: () {
               ref.read(playerVsCpuGameProvider.notifier).startGame(
                     numOfTiles: 9,
-                    player1: ref.read(playerOneProvider),
+                    xTurn: getRandomBoolean(),
                   );
               AppNavigator.pushNamed(HomeRoutes.vsCPU);
             },
@@ -69,7 +69,7 @@ class HomeScreen extends HookConsumerWidget {
             onTap: () {
               ref.read(pvpGameProvider.notifier).startGame(
                     numOfTiles: 9,
-                    player1: ref.read(playerOneProvider),
+                    xTurn: getRandomBoolean(),
                   );
               AppNavigator.pushNamed(HomeRoutes.vsPlayer);
             },
