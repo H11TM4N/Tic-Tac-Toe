@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tic_tac_toe/src/features/home/logic/providers/pvp_game_provider.dart';
-import 'package:tic_tac_toe/src/features/home/logic/providers/player_one_provider.dart';
+import 'package:tic_tac_toe/src/features/home/logic/providers/providers.dart';
 import 'package:tic_tac_toe/src/features/navigation/nav.dart';
 import 'package:tic_tac_toe/src/features/navigation/routes.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
@@ -55,6 +54,10 @@ class HomeScreen extends HookConsumerWidget {
             color: appColors.lightYellow,
             hoverColor: appColors.lightYellowHover,
             onTap: () {
+              ref.read(playerVsCpuGameProvider.notifier).startGame(
+                    numOfTiles: 9,
+                    player1: ref.read(playerOneProvider),
+                  );
               AppNavigator.pushNamed(HomeRoutes.vsCPU);
             },
           ),
