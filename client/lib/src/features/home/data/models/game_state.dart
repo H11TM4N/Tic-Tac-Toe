@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 class GameState {
   String player1;
   List<String> displayTiles;
@@ -64,5 +66,37 @@ class GameState {
   @override
   String toString() {
     return 'GameState(player1: $player1, displayTiles: $displayTiles, winTiles: $winTiles, boardSize: $boardSize, align: $align, xTurn: $xTurn, oWins: $oWins, xWins: $xWins, ties: $ties, filledTiles: $filledTiles)';
+  }
+
+  @override
+  bool operator ==(covariant GameState other) {
+    if (identical(this, other)) return true;
+    final listEquals = const DeepCollectionEquality().equals;
+  
+    return 
+      other.player1 == player1 &&
+      listEquals(other.displayTiles, displayTiles) &&
+      listEquals(other.winTiles, winTiles) &&
+      other.boardSize == boardSize &&
+      other.align == align &&
+      other.xTurn == xTurn &&
+      other.oWins == oWins &&
+      other.xWins == xWins &&
+      other.ties == ties &&
+      other.filledTiles == filledTiles;
+  }
+
+  @override
+  int get hashCode {
+    return player1.hashCode ^
+      displayTiles.hashCode ^
+      winTiles.hashCode ^
+      boardSize.hashCode ^
+      align.hashCode ^
+      xTurn.hashCode ^
+      oWins.hashCode ^
+      xWins.hashCode ^
+      ties.hashCode ^
+      filledTiles.hashCode;
   }
 }

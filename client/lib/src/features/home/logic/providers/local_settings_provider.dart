@@ -11,6 +11,7 @@ class LocalSettingStateNotifier extends StateNotifier<LocalSetting> {
   LocalSettingStateNotifier() : super(LocalSetting.empty());
 
   void selectMark(String value) {
+    if (value.toLowerCase() != 'x' || value.toLowerCase() != 'o') return;
     if (state.player1 != value) {
       state = state.copyWith(
         player1: value.toLowerCase(),
@@ -30,7 +31,7 @@ class LocalSettingStateNotifier extends StateNotifier<LocalSetting> {
 
   void selectBoardSize(int value) {
     log('value: $value');
-    if (value < 3) return;
+    if (value < 3 || value > 7) return;
     if (state.boardSize != value) {
       state = state.copyWith(
         boardSize: value,
@@ -38,7 +39,7 @@ class LocalSettingStateNotifier extends StateNotifier<LocalSetting> {
             ? 3
             : value == 4
                 ? 4
-                :null,
+                : null,
         aligns: value == 3
             ? [3]
             : value == 4
@@ -50,6 +51,7 @@ class LocalSettingStateNotifier extends StateNotifier<LocalSetting> {
   }
 
   void selectAlign(int value) {
+    if (value < 3 || value > 4) return;
     if (state.align != value) {
       state = state.copyWith(
         align: value,

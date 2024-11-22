@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:tic_tac_toe/src/features/home/data/data.dart';
 
 class LocalSetting {
@@ -51,5 +52,29 @@ class LocalSetting {
       boards: boards ?? this.boards,
       aligns: aligns ?? this.aligns,
     );
+  }
+
+  @override
+  bool operator ==(covariant LocalSetting other) {
+    if (identical(this, other)) return true;
+    final listEquals = const DeepCollectionEquality().equals;
+  
+    return 
+      other.player1 == player1 &&
+      other.cpuDifficulty == cpuDifficulty &&
+      other.boardSize == boardSize &&
+      other.align == align &&
+      listEquals(other.boards, boards) &&
+      listEquals(other.aligns, aligns);
+  }
+
+  @override
+  int get hashCode {
+    return player1.hashCode ^
+      cpuDifficulty.hashCode ^
+      boardSize.hashCode ^
+      align.hashCode ^
+      boards.hashCode ^
+      aligns.hashCode;
   }
 }
