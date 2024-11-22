@@ -1,28 +1,80 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tic_tac_toe/src/features/home/data/data.dart';
 import 'package:tic_tac_toe/src/features/home/logic/providers/providers.dart';
 import 'package:tic_tac_toe/src/features/navigation/nav.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
 
-class BoardSettingDialog extends HookConsumerWidget {
+class BoardSettingDialog extends ConsumerStatefulWidget {
   const BoardSettingDialog({super.key});
 
   @override
-  Widget build(BuildContext context, ref) {
+  ConsumerState<BoardSettingDialog> get createState =>
+      _BoardSettingDialogState();
+}
+
+class _BoardSettingDialogState extends ConsumerState<BoardSettingDialog>
+    with TickerProviderStateMixin {
+  late TabController boardTabController;
+  late TabController alignTabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeTabControllers();
+  }
+
+  @override
+  void dispose() {
+    boardTabController.dispose();
+    alignTabController.dispose();
+    super.dispose();
+  }
+
+  void _initializeTabControllers() {
+    final boards = ref.read(localSettingProvider).boards;
+    final aligns = ref.read(localSettingProvider).aligns;
+    final boardSize = ref.read(localSettingProvider).boardSize;
+    final align = ref.read(localSettingProvider).align;
+
+    boardTabController = TabController(
+      vsync: this,
+      length: boards.length,
+      initialIndex: boards.indexOf(boardSize),
+    );
+    alignTabController = TabController(
+      vsync: this,
+      length: aligns.length,
+      initialIndex: aligns.indexOf(align),
+    );
+  }
+
+  void _updateTabControllers(List<int> boards, List<int> aligns) {
+    boardTabController.dispose();
+    alignTabController.dispose();
+
+    boardTabController = TabController(
+      vsync: this,
+      length: boards.length,
+      initialIndex: boards.indexOf(ref.read(localSettingProvider).boardSize),
+    );
+    alignTabController = TabController(
+      vsync: this,
+      length: aligns.length,
+      initialIndex: aligns.indexOf(ref.read(localSettingProvider).align),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final boards = ref.watch(localSettingProvider).boards;
     final aligns = ref.watch(localSettingProvider).aligns;
 
-    final boardSize = ref.watch(localSettingProvider).boardSize;
-    final align = ref.watch(localSettingProvider).align;
-
-    final boardTabController = useTabController(
-      initialLength: boards.length,
-      initialIndex: boards.indexOf(boardSize),
-    );
-    final alignTabController = useTabController(
-      initialLength: aligns.length,
-      initialIndex: aligns.indexOf(align),
+    ref.listen<LocalSetting>(
+      localSettingProvider,
+      (_, next) {
+        _updateTabControllers(next.boards, next.aligns);
+      },
     );
 
     return SizedBox(
@@ -86,5 +138,19 @@ class BoardSettingDialog extends HookConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+class BoardSetting extends ConsumerStatefulWidget {
+  const BoardSetting({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> get createState => _BoardSettingState();
+}
+
+class _BoardSettingState extends ConsumerState<BoardSetting> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

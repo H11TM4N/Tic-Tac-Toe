@@ -81,16 +81,15 @@ class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
 
   bool _checkWinner() {
     for (var condition in winningConditions) {
-      if (state.displayTiles[condition[0]] ==
-              state.displayTiles[condition[1]] &&
-          state.displayTiles[condition[0]] ==
-              state.displayTiles[condition[2]] &&
-          state.displayTiles[condition[0]] != '') {
-        _showWinDialog(state.displayTiles[condition[0]], condition);
+      if (condition.every((index) => state.displayTiles[index] == 'x')) {
+        _showWinDialog('x', condition);
+        return true;
+      } else if (condition.every((index) => state.displayTiles[index] == 'o')) {
+        _showWinDialog('o', condition);
         return true;
       }
     }
-
+    // Check for a draw
     if (state.filledTiles == (setting.boardSize * setting.boardSize)) {
       _showDrawDialog();
       return true;

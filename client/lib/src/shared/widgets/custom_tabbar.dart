@@ -76,6 +76,7 @@ Widget _buildTab(String text, bool isSelected, double tabHeight) {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Tab(
+            key: ValueKey(text),
             child: text.toLowerCase() == 'x' || text.toLowerCase() == 'o'
                 ? SvgAsset(
                     height: 32,

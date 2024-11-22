@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tic_tac_toe/src/features/home/logic/providers/providers.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
 
-class PlacementTile extends HookWidget {
+class PlacementTile extends HookConsumerWidget {
   final String player1;
   final String display;
   final bool tileFilled;
@@ -16,7 +18,8 @@ class PlacementTile extends HookWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final boardSize = ref.read(localSettingProvider).boardSize;
     final isHovering = useState<bool>(false);
 
     return GestureDetector(
@@ -27,6 +30,7 @@ class PlacementTile extends HookWidget {
         onExit: (_) => isHovering.value = false,
         child: Container(
           alignment: Alignment.center,
+          padding: boardSize > 4 ? EdgeInsets.all(10) : null,
           decoration: BoxDecoration(
             color: tileFilled
                 ? (display == 'x' ? appColors.lightBlue : appColors.lightYellow)

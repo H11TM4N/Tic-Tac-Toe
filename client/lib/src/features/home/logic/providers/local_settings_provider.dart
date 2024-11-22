@@ -38,7 +38,7 @@ class LocalSettingStateNotifier extends StateNotifier<LocalSetting> {
             ? 3
             : value == 4
                 ? 4
-                : 3,
+                :null,
         aligns: value == 3
             ? [3]
             : value == 4
