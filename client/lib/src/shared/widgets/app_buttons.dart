@@ -80,7 +80,7 @@ class AppButton extends HookWidget {
 }
 
 class AppIconButton extends HookWidget {
-  final String icon;
+  final dynamic icon;
   final VoidCallback? onTap;
   final Color? color;
   final Color? hoverColor;
@@ -95,7 +95,10 @@ class AppIconButton extends HookWidget {
     this.borderRadius,
     this.height,
     this.width,
-  });
+  }) : assert(
+          icon is String || icon is IconData,
+          'The icon must be of type String or IconData',
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +116,9 @@ class AppIconButton extends HookWidget {
         borderRadius: 8,
         buttonHeight: 5,
         backgroundColor: buttonColor.value,
-        child: SvgAsset(path: icon),
+        child: icon is String
+            ? SvgAsset(path: icon)
+            : Icon(icon, color: appColors.darkNavy, size: 25),
       ),
     );
   }

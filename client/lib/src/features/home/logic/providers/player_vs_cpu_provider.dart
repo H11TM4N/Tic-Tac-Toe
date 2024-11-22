@@ -12,17 +12,23 @@ final playerVsCpuGameProvider =
 
 class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
   final LocalSetting setting;
+  late List<List<int>> winningConditions;
   PlayerVsCpuGameStateNotifier({
     required this.setting,
-  }) : super(GameState.empty());
+  }) : super(GameState.empty()) {
+    winningConditions =
+        generateWinningConditions(setting.boardSize, setting.align);
+  }
 
   void startGame({
-    required int numOfTiles,
     required bool xTurn,
   }) {
     state = GameState.empty().copyWith(
+      boardSize: setting.boardSize,
+      align: setting.align,
       player1: setting.player1,
-      displayTiles: List<String>.filled(numOfTiles, ''),
+      displayTiles:
+          List<String>.filled((setting.boardSize * setting.boardSize), ''),
       xTurn: xTurn,
     );
     if ((state.player1 == 'x' ? !state.xTurn : state.xTurn)) {
@@ -47,8 +53,15 @@ class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
     final move = setting.cpuDifficulty == DifficultyLevel.easy
         ? EasyCpuStrategy().decideMove(state.displayTiles)
         : setting.cpuDifficulty == DifficultyLevel.medium
-            ? MediumCpuStrategy().decideMove(state.displayTiles)
-            : HardCpuStrategy(cpuSymbol).decideMove(state.displayTiles);
+            ? MediumCpuStrategy(
+                boardSize: setting.boardSize,
+                align: setting.align,
+              ).decideMove(state.displayTiles)
+            : HardCpuStrategy(
+                boardSize: setting.boardSize,
+                align: setting.align,
+                cpuSymbol: cpuSymbol,
+              ).decideMove(state.displayTiles);
     _placeMove(move, cpuSymbol);
     _checkWinner();
   }
@@ -67,7 +80,7 @@ class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
   }
 
   bool _checkWinner() {
-    for (var condition in WINNING_CONDITIONS) {
+    for (var condition in winningConditions) {
       if (state.displayTiles[condition[0]] ==
               state.displayTiles[condition[1]] &&
           state.displayTiles[condition[0]] ==
@@ -78,7 +91,7 @@ class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
       }
     }
 
-    if (state.filledTiles == 9) {
+    if (state.filledTiles == (setting.boardSize * setting.boardSize)) {
       _showDrawDialog();
       return true;
     }
@@ -92,31 +105,37 @@ class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
       oWins: winner == 'o' ? (state.oWins + 1) : null,
       winTiles: winTiles,
     );
-    AppDialog.dialog(GameResultDialog(
-      isPvP: false,
-      player1: state.player1,
-      result: winner == state.player1 ? GameResult.win : GameResult.lose,
-      onNextRound: goToNextRound,
-      onQuit: clearScoreBoard,
-    ));
+    AppDialog.dialog(
+      dismissable: false,
+      GameResultDialog(
+        isPvP: false,
+        player1: state.player1,
+        result: winner == state.player1 ? GameResult.win : GameResult.lose,
+        onNextRound: goToNextRound,
+        onQuit: clearScoreBoard,
+      ),
+    );
   }
 
   void _showDrawDialog() {
     state = state.copyWith(
       ties: state.ties + 1,
     );
-    AppDialog.dialog(GameResultDialog(
-      isPvP: false,
-      player1: state.player1,
-      result: GameResult.draw,
-      onNextRound: goToNextRound,
-      onQuit: clearScoreBoard,
-    ));
+    AppDialog.dialog(
+      dismissable: false,
+      GameResultDialog(
+        isPvP: false,
+        player1: state.player1,
+        result: GameResult.draw,
+        onNextRound: goToNextRound,
+        onQuit: clearScoreBoard,
+      ),
+    );
   }
 
   void goToNextRound() {
     state = state.copyWith(
-      displayTiles: List.filled(9, ''),
+      displayTiles: List.filled((setting.boardSize * setting.boardSize), ''),
       filledTiles: 0,
       winTiles: [],
     );
@@ -129,6 +148,7 @@ class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
   void clearScoreBoard() {
     state = GameState.empty().copyWith(
       player1: setting.player1,
+      displayTiles: List.filled((setting.boardSize * setting.boardSize), ''),
     );
   }
 }

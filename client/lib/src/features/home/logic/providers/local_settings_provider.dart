@@ -27,4 +27,34 @@ class LocalSettingStateNotifier extends StateNotifier<LocalSetting> {
       log(state.toString());
     }
   }
+
+  void selectBoardSize(int value) {
+    log('value: $value');
+    if (value < 3) return;
+    if (state.boardSize != value) {
+      state = state.copyWith(
+        boardSize: value,
+        align: value == 3
+            ? 3
+            : value == 4
+                ? 4
+                : 3,
+        aligns: value == 3
+            ? [3]
+            : value == 4
+                ? [4]
+                : [3, 4],
+      );
+      log(state.toString());
+    }
+  }
+
+  void selectAlign(int value) {
+    if (state.align != value) {
+      state = state.copyWith(
+        align: value,
+      );
+      log(state.toString());
+    }
+  }
 }

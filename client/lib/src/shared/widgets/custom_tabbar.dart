@@ -7,12 +7,14 @@ class CustomTabBar extends ConsumerWidget {
   final TabController tabController;
   final List<String> tabs;
   final void Function(int)? onTap;
+  final double tabHeight;
 
   const CustomTabBar({
     super.key,
     required this.tabController,
     required this.tabs,
     required this.onTap,
+    this.tabHeight = 54,
   });
 
   @override
@@ -46,8 +48,8 @@ class CustomTabBar extends ConsumerWidget {
             dividerColor: Colors.transparent,
             indicatorSize: TabBarIndicatorSize.label,
             tabs: tabs
-                .map((tab) =>
-                    _buildTab(tab, tabs.indexOf(tab) == tabController.index))
+                .map((tab) => _buildTab(
+                    tab, tabs.indexOf(tab) == tabController.index, tabHeight))
                 .toList(),
           ),
         );
@@ -56,7 +58,7 @@ class CustomTabBar extends ConsumerWidget {
   }
 }
 
-Widget _buildTab(String text, bool isSelected) {
+Widget _buildTab(String text, bool isSelected, double tabHeight) {
   return HookBuilder(
     builder: (context) {
       final isHovered = useState(false);
@@ -65,7 +67,7 @@ Widget _buildTab(String text, bool isSelected) {
         onEnter: (_) => isHovered.value = true,
         onExit: (_) => isHovered.value = false,
         child: Container(
-          height: 54,
+          height: tabHeight,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: isSelected

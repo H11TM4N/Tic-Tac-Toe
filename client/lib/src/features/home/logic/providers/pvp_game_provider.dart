@@ -11,17 +11,23 @@ final pvpGameProvider =
 
 class PvPGameStateNotifier extends StateNotifier<GameState> {
   final LocalSetting setting;
+  late List<List<int>> winningConditions;
   PvPGameStateNotifier({
     required this.setting,
-  }) : super(GameState.empty());
+  }) : super(GameState.empty()) {
+    winningConditions =
+        generateWinningConditions(setting.boardSize, setting.align);
+  }
 
   void startGame({
-    required int numOfTiles,
     required bool xTurn,
   }) {
     state = GameState.empty().copyWith(
+      boardSize: setting.boardSize,
+      align: setting.align,
       player1: setting.player1,
-      displayTiles: List<String>.filled(numOfTiles, ''),
+      displayTiles:
+          List<String>.filled((setting.boardSize * setting.boardSize), ''),
       xTurn: xTurn,
     );
   }
@@ -45,14 +51,14 @@ class PvPGameStateNotifier extends StateNotifier<GameState> {
 
   void goToNextRound() {
     state = state.copyWith(
-      displayTiles: List.filled(9, ''),
+      displayTiles: List.filled((setting.boardSize * setting.boardSize), ''),
       filledTiles: 0,
       winTiles: [],
     );
   }
 
   void _checkWinner() {
-    for (var condition in WINNING_CONDITIONS) {
+    for (var condition in winningConditions) {
       if (state.displayTiles[condition[0]] ==
               state.displayTiles[condition[1]] &&
           state.displayTiles[condition[0]] ==
@@ -64,7 +70,7 @@ class PvPGameStateNotifier extends StateNotifier<GameState> {
     }
 
     // Check for a draw
-    if (state.filledTiles == 9) {
+    if (state.filledTiles == (setting.boardSize * setting.boardSize)) {
       _showDrawDialog();
     }
   }
@@ -75,31 +81,38 @@ class PvPGameStateNotifier extends StateNotifier<GameState> {
       oWins: winner == 'o' ? (state.oWins + 1) : null,
       winTiles: winTiles,
     );
-    AppDialog.dialog(GameResultDialog(
-      isPvP: true,
-      player1: winner,
-      result: winner == state.player1 ? GameResult.win : GameResult.lose,
-      onNextRound: goToNextRound,
-      onQuit: clearScoreBoard,
-    ));
+    AppDialog.dialog(
+      dismissable: false,
+      GameResultDialog(
+        isPvP: true,
+        player1: winner,
+        result: winner == state.player1 ? GameResult.win : GameResult.lose,
+        onNextRound: goToNextRound,
+        onQuit: clearScoreBoard,
+      ),
+    );
   }
 
   void _showDrawDialog() {
     state = state.copyWith(
       ties: state.ties + 1,
     );
-    AppDialog.dialog(GameResultDialog(
-      isPvP: true,
-      player1: '',
-      result: GameResult.draw,
-      onNextRound: goToNextRound,
-      onQuit: clearScoreBoard,
-    ));
+    AppDialog.dialog(
+      dismissable: false,
+      GameResultDialog(
+        isPvP: true,
+        player1: '',
+        result: GameResult.draw,
+        onNextRound: goToNextRound,
+        onQuit: clearScoreBoard,
+      ),
+    );
   }
 
   void clearScoreBoard() {
     state = GameState.empty().copyWith(
       player1: setting.player1,
+      displayTiles: List.filled((setting.boardSize * setting.boardSize), ''),
     );
   }
 }

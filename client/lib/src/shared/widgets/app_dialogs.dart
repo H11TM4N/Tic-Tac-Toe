@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppDialog {
-  static void dialog(Widget content, {Color? bgColor}) {
+  static void dialog(
+    Widget content, {
+    Color? bgColor,
+    bool dismissable = true,
+  }) {
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
@@ -14,7 +18,7 @@ class AppDialog {
         shadowColor: bgColor ?? appColors.semiDarkNavy,
         child: content,
       ),
-      barrierDismissible: true,
+      barrierDismissible: dismissable,
     );
   }
 }

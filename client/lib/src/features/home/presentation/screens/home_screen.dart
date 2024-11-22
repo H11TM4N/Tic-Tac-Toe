@@ -19,7 +19,20 @@ class HomeScreen extends HookConsumerWidget {
     return Scaffold(
       body: AppColumn(
         children: [
-          SvgAsset(path: xAndO),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              SvgAsset(path: xAndO),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  BoardButton(
+                    onTap: () => AppDialog.dialog(BoardSettingDialog()),
+                  ),
+                ],
+              )
+            ],
+          ),
           YBox(30),
           Container(
             padding: EdgeInsets.all(15),
@@ -71,7 +84,6 @@ class HomeScreen extends HookConsumerWidget {
             hoverColor: appColors.lightBlueHover,
             onTap: () {
               ref.read(pvpGameProvider.notifier).startGame(
-                    numOfTiles: 9,
                     xTurn: getRandomBoolean(),
                   );
               AppNavigator.pushNamed(HomeRoutes.vsPlayer);

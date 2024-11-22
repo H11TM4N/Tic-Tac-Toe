@@ -53,7 +53,6 @@ class SelectDifficultyDialog extends HookConsumerWidget {
               title: 'PROCEED',
               onTap: () {
                 ref.read(playerVsCpuGameProvider.notifier).startGame(
-                      numOfTiles: 9,
                       xTurn: getRandomBoolean(),
                     );
                 AppNavigator.pushNamed(HomeRoutes.vsCPU);
