@@ -1,27 +1,26 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tic_tac_toe/src/features/home/data/models/game_state.dart';
-import 'package:tic_tac_toe/src/features/home/data/winning_conditions.dart';
-import 'package:tic_tac_toe/src/features/home/logic/providers/player_one_provider.dart';
+import 'package:tic_tac_toe/src/features/home/data/data.dart';
+import 'package:tic_tac_toe/src/features/home/logic/providers/local_settings_provider.dart';
 import 'package:tic_tac_toe/src/features/home/presentation/components/game_result_dialog.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
 
-import '../../data/enums/game_result.dart';
-
 final pvpGameProvider =
     StateNotifierProvider<PvPGameStateNotifier, GameState>((ref) {
-  return PvPGameStateNotifier(player1: ref.read(playerOneProvider));
+  return PvPGameStateNotifier(setting: ref.read(localSettingProvider));
 });
 
 class PvPGameStateNotifier extends StateNotifier<GameState> {
-  final String player1;
-  PvPGameStateNotifier({required this.player1,}) : super(GameState.empty());
+  final LocalSetting setting;
+  PvPGameStateNotifier({
+    required this.setting,
+  }) : super(GameState.empty());
 
   void startGame({
     required int numOfTiles,
     required bool xTurn,
   }) {
     state = GameState.empty().copyWith(
-      player1: player1,
+      player1: setting.player1,
       displayTiles: List<String>.filled(numOfTiles, ''),
       xTurn: xTurn,
     );
@@ -100,7 +99,7 @@ class PvPGameStateNotifier extends StateNotifier<GameState> {
 
   void clearScoreBoard() {
     state = GameState.empty().copyWith(
-      player1: player1,
+      player1: setting.player1,
     );
   }
 }

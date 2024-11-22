@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tic_tac_toe/src/features/home/logic/providers/providers.dart';
+import 'package:tic_tac_toe/src/features/home/presentation/components/components.dart';
 import 'package:tic_tac_toe/src/features/navigation/nav.dart';
 import 'package:tic_tac_toe/src/features/navigation/routes.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
@@ -12,7 +13,8 @@ class HomeScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final tabController = useTabController(initialLength: 2);
+    final players = ['X', 'O'];
+    final tabController = useTabController(initialLength: players.length);
 
     return Scaffold(
       body: AppColumn(
@@ -36,7 +38,10 @@ class HomeScreen extends HookConsumerWidget {
                 YBox(20),
                 CustomTabBar(
                   tabController: tabController,
-                  tabs: ['X', 'O'],
+                  tabs: players,
+                  onTap: (index) => ref
+                      .read(localSettingProvider.notifier)
+                      .selectMark(players[index]),
                 ),
                 YBox(20),
                 AppText(
@@ -54,11 +59,9 @@ class HomeScreen extends HookConsumerWidget {
             color: appColors.lightYellow,
             hoverColor: appColors.lightYellowHover,
             onTap: () {
-              ref.read(playerVsCpuGameProvider.notifier).startGame(
-                    numOfTiles: 9,
-                    xTurn: getRandomBoolean(),
-                  );
-              AppNavigator.pushNamed(HomeRoutes.vsCPU);
+              AppDialog.dialog(
+                SelectDifficultyDialog(),
+              );
             },
           ),
           YBox(20),

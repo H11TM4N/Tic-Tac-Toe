@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tic_tac_toe/src/features/home/logic/providers/player_one_provider.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
 
 class CustomTabBar extends ConsumerWidget {
   final TabController tabController;
   final List<String> tabs;
+  final void Function(int)? onTap;
 
   const CustomTabBar({
     super.key,
     required this.tabController,
     required this.tabs,
+    required this.onTap,
   });
 
   @override
@@ -28,8 +29,7 @@ class CustomTabBar extends ConsumerWidget {
           child: TabBar(
             controller: tabController,
             isScrollable: false,
-            onTap: (index) =>
-                ref.read(playerOneProvider.notifier).selectMark(tabs[index]),
+            onTap: onTap,
             labelStyle: TextStyle(
               color: appColors.darkNavy,
               fontWeight: FontWeight.w500,
@@ -74,11 +74,18 @@ Widget _buildTab(String text, bool isSelected) {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Tab(
-            child: SvgAsset(
-              height: 32,
-              path: text.toLowerCase() == 'o' ? oFilled : xFilled,
-              color: isSelected ? appColors.darkNavy : appColors.sliver,
-            ),
+            child: text.toLowerCase() == 'x' || text.toLowerCase() == 'o'
+                ? SvgAsset(
+                    height: 32,
+                    path: text.toLowerCase() == 'o' ? oFilled : xFilled,
+                    color: isSelected ? appColors.darkNavy : appColors.sliver,
+                  )
+                : AppText(
+                    text,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: isSelected ? appColors.darkNavy : appColors.sliver,
+                  ),
           ),
         ),
       );

@@ -1,28 +1,27 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tic_tac_toe/src/features/home/data/models/game_state.dart';
-import 'package:tic_tac_toe/src/features/home/data/winning_conditions.dart';
-import 'package:tic_tac_toe/src/features/home/logic/cpu_strategy/hard_mode.dart';
+import 'package:tic_tac_toe/src/features/home/data/data.dart';
+import 'package:tic_tac_toe/src/features/home/logic/cpu_strategy/cpu_strategy.dart';
 import 'package:tic_tac_toe/src/features/home/presentation/components/game_result_dialog.dart';
 import 'package:tic_tac_toe/src/shared/shared.dart';
-
-import '../../data/enums/game_result.dart';
-import 'player_one_provider.dart';
+import 'local_settings_provider.dart';
 
 final playerVsCpuGameProvider =
     StateNotifierProvider<PlayerVsCpuGameStateNotifier, GameState>((ref) {
-  return PlayerVsCpuGameStateNotifier(player1: ref.read(playerOneProvider));
+  return PlayerVsCpuGameStateNotifier(setting: ref.read(localSettingProvider));
 });
 
 class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
-  final String player1;
-  PlayerVsCpuGameStateNotifier({required this.player1,}) : super(GameState.empty());
+  final LocalSetting setting;
+  PlayerVsCpuGameStateNotifier({
+    required this.setting,
+  }) : super(GameState.empty());
 
   void startGame({
     required int numOfTiles,
     required bool xTurn,
   }) {
     state = GameState.empty().copyWith(
-      player1: player1,
+      player1: setting.player1,
       displayTiles: List<String>.filled(numOfTiles, ''),
       xTurn: xTurn,
     );
@@ -45,7 +44,11 @@ class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
 
   void _cpuMove() {
     String cpuSymbol = state.player1 == 'x' ? 'o' : 'x';
-    final move = HardCpuStrategy(cpuSymbol).decideMove(state.displayTiles);
+    final move = setting.cpuDifficulty == DifficultyLevel.easy
+        ? EasyCpuStrategy().decideMove(state.displayTiles)
+        : setting.cpuDifficulty == DifficultyLevel.medium
+            ? MediumCpuStrategy().decideMove(state.displayTiles)
+            : HardCpuStrategy(cpuSymbol).decideMove(state.displayTiles);
     _placeMove(move, cpuSymbol);
     _checkWinner();
   }
@@ -125,7 +128,7 @@ class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {
 
   void clearScoreBoard() {
     state = GameState.empty().copyWith(
-      player1: player1,
+      player1: setting.player1,
     );
   }
 }

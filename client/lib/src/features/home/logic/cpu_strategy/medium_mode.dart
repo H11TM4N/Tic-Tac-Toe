@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:tic_tac_toe/src/features/home/data/winning_conditions.dart';
+import 'package:tic_tac_toe/src/features/home/data/constants/winning_conditions.dart';
 import 'cpu_strategy.dart';
 
 class MediumCpuStrategy implements CpuStrategy {
