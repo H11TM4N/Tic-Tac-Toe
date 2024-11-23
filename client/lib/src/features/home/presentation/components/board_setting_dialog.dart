@@ -77,8 +77,11 @@ class _BoardSettingDialogState extends ConsumerState<BoardSettingDialog>
       },
     );
 
-    return SizedBox(
+    return Container(
       height: 400,
+      padding: DeviceType(context).isMobile
+          ? EdgeInsets.symmetric(horizontal: 10)
+          : null,
       width: double.infinity,
       child: Column(
         mainAxisSize: MainAxisSize.min,

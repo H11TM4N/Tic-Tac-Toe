@@ -18,9 +18,12 @@ class SelectDifficultyDialog extends HookConsumerWidget {
       initialLength: levels.length,
       initialIndex: levels.indexOf(difficultyLevelToString(cpuDiff)),
     );
-    return SizedBox(
+    return Container(
       height: 300,
       width: double.infinity,
+      padding: DeviceType(context).isMobile
+          ? EdgeInsets.symmetric(horizontal: 10)
+          : null,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
