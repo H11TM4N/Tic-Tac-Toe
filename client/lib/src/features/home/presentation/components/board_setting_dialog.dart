@@ -143,17 +143,3 @@ class _BoardSettingDialogState extends ConsumerState<BoardSettingDialog>
     );
   }
 }
-
-class BoardSetting extends ConsumerStatefulWidget {
-  const BoardSetting({super.key});
-
-  @override
-  ConsumerState<ConsumerStatefulWidget> get createState => _BoardSettingState();
-}
-
-class _BoardSettingState extends ConsumerState<BoardSetting> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
