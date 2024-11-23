@@ -2,6 +2,8 @@
 
 A simple and interactive Tic Tac Toe game built with Flutter. Play against either another player (PvP) or against an AI (CPU). This app allows users to customize their board size, difficulty levels, and more.
 
+![Video Demo](client/assets/demo.mp4)
+
 ## Features
 
 - **Player vs Player (PvP)**: Play with a friend locally.
