@@ -21,6 +21,10 @@ jobs:
         with:
           flutter-version: "3.24.5"
 
+      - name: Clear Flutter cache
+        run: flutter clean
+        working-directory: client
+
       - name: Install dependencies
         run: flutter pub get
         working-directory: client
