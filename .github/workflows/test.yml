@@ -23,6 +23,8 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+        working-directory: client
 
       - name: Run tests
         run: flutter test
+        working-directory: client
