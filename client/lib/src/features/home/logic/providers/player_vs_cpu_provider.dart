@@ -7,7 +7,7 @@ import 'local_settings_provider.dart';
 
 final playerVsCpuGameProvider =
     StateNotifierProvider<PlayerVsCpuGameStateNotifier, GameState>((ref) {
-  return PlayerVsCpuGameStateNotifier(setting: ref.read(localSettingProvider));
+  return PlayerVsCpuGameStateNotifier(setting: ref.watch(localSettingProvider));
 });
 
 class PlayerVsCpuGameStateNotifier extends StateNotifier<GameState> {

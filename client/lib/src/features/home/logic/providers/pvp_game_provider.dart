@@ -6,7 +6,7 @@ import 'package:tic_tac_toe/src/shared/shared.dart';
 
 final pvpGameProvider =
     StateNotifierProvider<PvPGameStateNotifier, GameState>((ref) {
-  return PvPGameStateNotifier(setting: ref.read(localSettingProvider));
+  return PvPGameStateNotifier(setting: ref.watch(localSettingProvider));
 });
 
 class PvPGameStateNotifier extends StateNotifier<GameState> {
