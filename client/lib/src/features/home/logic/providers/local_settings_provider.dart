@@ -11,7 +11,7 @@ class LocalSettingStateNotifier extends StateNotifier<LocalSetting> {
   LocalSettingStateNotifier() : super(LocalSetting.empty());
 
   void selectMark(String value) {
-    if (value.toLowerCase() != 'x' || value.toLowerCase() != 'o') return;
+    if (value.toLowerCase() != 'x' && value.toLowerCase() != 'o') return;
     if (state.player1 != value) {
       state = state.copyWith(
         player1: value.toLowerCase(),
