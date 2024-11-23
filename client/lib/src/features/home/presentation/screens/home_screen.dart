@@ -14,6 +14,7 @@ class HomeScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final players = ['X', 'O'];
+    final player1 = ref.watch(localSettingProvider).player1.toUpperCase();
     final tabController = useTabController(initialLength: players.length);
 
     return Scaffold(
@@ -58,7 +59,7 @@ class HomeScreen extends HookConsumerWidget {
                 ),
                 YBox(20),
                 AppText(
-                  'REMEMBER : X GOES FIRST',
+                  'REMEMBER : $player1 GOES FIRST',
                   color: appColors.sliver,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
