@@ -3,7 +3,6 @@ import 'package:tic_tac_toe/src/features/navigation/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tic_tac_toe/src/shared/shared.dart';
 
 class SplashScreen extends HookConsumerWidget {
   const SplashScreen({super.key});
@@ -14,7 +13,7 @@ class SplashScreen extends HookConsumerWidget {
 
     useEffect(() {
       Future.delayed(
-        const Duration(milliseconds: 3000),
+        const Duration(milliseconds: 500),
         () => AppNavigator.replaceAllNamed(HomeRoutes.home),
       );
       return null;
@@ -25,13 +24,7 @@ class SplashScreen extends HookConsumerWidget {
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: theme.inversePrimary,
-        ),
-        child: Center(
-          child: AppText(
-            'Splash screen',
-            color: theme.onSurface,
-          ),
+          color: theme.primary,
         ),
       ),
     );
