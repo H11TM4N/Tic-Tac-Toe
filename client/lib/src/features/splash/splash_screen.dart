@@ -1,5 +1,4 @@
 import 'package:tic_tac_toe/src/features/navigation/app_navigator.dart';
-import 'package:tic_tac_toe/src/features/navigation/redirect.dart';
 import 'package:tic_tac_toe/src/features/navigation/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -14,7 +13,6 @@ class SplashScreen extends HookConsumerWidget {
     final theme = Theme.of(context).colorScheme;
 
     useEffect(() {
-      authManager.init();
       Future.delayed(
         const Duration(milliseconds: 3000),
         () => AppNavigator.replaceAllNamed(HomeRoutes.home),
