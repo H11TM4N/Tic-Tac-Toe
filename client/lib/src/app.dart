@@ -11,7 +11,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Converse',
+      title: 'Tic Tac Toe',
       theme: appTheme,
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
